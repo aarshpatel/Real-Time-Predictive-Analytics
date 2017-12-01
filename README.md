@@ -1,12 +1,9 @@
-# yhack_2017 (initial github repo)
+# YHack 2017 Project
 
-
-This is where all of the code for the yhack 2017 project resides...
-
-
-Contributors
+# Collobarators
 - Aarsh Patel
 - Lynn Samson
 - Varun Sharma
 - Chenhao Huang
+
 
