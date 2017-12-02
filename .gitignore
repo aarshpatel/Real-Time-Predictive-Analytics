@@ -48,4 +48,4 @@ src/train_semeval2018task2/crawler/crawler.properties
 *.pyc
 data/model_swm_300-6-10-low.w2v
 
-nodemodules/
+node_modules/
