@@ -20,9 +20,9 @@ def generate_points(start_time, end_time):
         thyme = s_t + interval * i
 
         if prob <= t:
-            entry = ["occurred", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", 2]
-        else:
             entry = ["occurred", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", 1]
+        else:
+            entry = ["occurred", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", 2]
 
         entry[0] = datetime.fromtimestamp(thyme).strftime('%m/%d/%Y %H:%M:%S')
         out.append(entry)
