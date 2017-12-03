@@ -81,6 +81,6 @@ We learned a lot about the IoT framework and predictive analysis on streaming da
 
 ## Screenshots
 
-!(Alt text)[https://github.com/aarshpatel/yhack_2017/screenshot1.png]
+![Alt text](https://github.com/aarshpatel/yhack_2017/screenshot1.png)
 
-!(Alt text)[https://github.com/aarshpatel/yhack_2017/screenshot2.png]
+![Alt text](https://github.com/aarshpatel/yhack_2017/screenshot2.png)
