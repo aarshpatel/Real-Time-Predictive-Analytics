@@ -44,18 +44,6 @@ Then, use `npm` to install the remaining JavaScript dependencies.
 npm install
 ```
 
-## Development
-
-The entry point for the app is in `js/app.js`. The starter React component is `js/Hello.js`. Editing this file is a good place to start.
-
-While developing on the frontend, run `webpack --watch` to keep re-compiling your JavaScript code.
-
-Running `webpack` creates a file in `static/bundle.js`, which is the bundled version of your frontend code.
-
-The "backend" here is a bare-bones Flask app. Look in `app.py` if you want to make edits to the backend.
-
-To run the application, follow the steps in the next section.
-
 ## Running the app
 
 If you're using a virtualenv, activate it.
@@ -69,4 +57,19 @@ Then run the Flask app:
 ```
 python app.py
 ```
+
+## How we built it
+In order to perform predictive analysis, we implemented an anomaly detection algorithm that takes the temporal nature of the data into consideration. We implemented the system on top of the Flask framework, with a React front-end. In addition, we used Firebase as a central data repository and hosted the app on Google's App Engine. We also used the Twilio API in order to implement text-message alerts.
+
+## Challenges we ran into
+The dataset we were given to work with was very small and not representative of the entire problem domain. Hence, we had to design a custom algorithm in order to generate sufficient data. Also, none of us had experience working with time series models or anomaly detection, so we had to learn a lot along the way.
+
+## What we learned
+We learned a lot about the IoT framework and predictive analysis on streaming data (e.g. online learning, time series, etc.). In addition, we learned about the importance of clean data for both visualization and predictive analysis. Last but not least, we learned that teamwork and collaboration are major keys to tackling challenging and unfamiliar problems.
+
+## Collaborators
+- Aarsh Patel 
+- Lynn Samson
+- Varun Sharma
+- Chenhao Huang 
 
