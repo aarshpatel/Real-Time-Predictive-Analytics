@@ -81,6 +81,6 @@ We learned a lot about the IoT framework and predictive analysis on streaming da
 
 ## Screenshots
 
-![screenshot1.png]
+!(Alt text)[screenshot1.png]
 
-![screenshot2.png]
+!(Alt text)[screenshot2.png]
