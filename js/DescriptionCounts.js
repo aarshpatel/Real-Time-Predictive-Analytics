@@ -10,24 +10,26 @@ class DescriptionCounts extends React.Component {
 	}
 
 	componentDidMount() {
-		let ref = firebase.database().ref('streaming_data');
-		let only_errors = ref.orderByChild("Sucess").equalTo(0);
+		let ref = firebase.database().ref('streaming-data');
+		let only_errors = ref.orderByChild("Success").equalTo(0);
 		let _this = this;
 
 		only_errors.on("value", function(snapshot) {
 		  	var data = snapshot.val();
 		  	var description_counts = {}
-		  	Object.keys(data).forEach(key => {
-		  		var description = data[key]["Description"]
-		  		if(description in description_counts) {
-		  			description_counts[description] += 1
-		  		} else {
-		  			description_counts[description] = 0
-		  		}
-			});
-		  	let descriptions = Object.keys(description_counts)
-		  	let description_cnts = Object.values(description_counts)
-		  	_this.setState({"descriptionCounts": {"description": descriptions, "description_cnt": description_cnts}, loaded: true})
+		  	if(data != null) {
+			  	Object.keys(data).forEach(key => {
+			  		var description = data[key]["Description"]
+			  		if(description in description_counts) {
+			  			description_counts[description] += 1
+			  		} else {
+			  			description_counts[description] = 0
+			  		}
+				});
+			  	let descriptions = Object.keys(description_counts)
+			  	let description_cnts = Object.values(description_counts)
+			  	_this.setState({"descriptionCounts": {"description": descriptions, "description_cnt": description_cnts}, loaded: true})
+			}
 		}, function (errorObject) {
 		  console.log("The read failed: " + errorObject.code);
 		});

@@ -61,7 +61,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(496);
+	var _reactDom = __webpack_require__(497);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -76,7 +76,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-			value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -105,7 +105,7 @@
 
 	var _LiveDashboard2 = _interopRequireDefault(_LiveDashboard);
 
-	var _firebaseConfig = __webpack_require__(497);
+	var _firebaseConfig = __webpack_require__(496);
 
 	var _firebaseConfig2 = _interopRequireDefault(_firebaseConfig);
 
@@ -118,65 +118,55 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Dashboard = function (_React$Component) {
-			_inherits(Dashboard, _React$Component);
+	  _inherits(Dashboard, _React$Component);
 
-			function Dashboard(props) {
-					_classCallCheck(this, Dashboard);
+	  function Dashboard(props) {
+	    _classCallCheck(this, Dashboard);
 
-					var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
-					_this.state = {};
-					firebase.initializeApp(_firebaseConfig2.default);
-					return _this;
-			}
+	    _this.state = {};
+	    firebase.initializeApp(_firebaseConfig2.default);
+	    return _this;
+	  }
 
-			_createClass(Dashboard, [{
-					key: 'render',
-					value: function render() {
-							var url = window.location.href;
-							if (url.includes("/live")) {
-									// render live page	
-									return _react2.default.createElement(_LiveDashboard2.default, null);
-							} else {
-									return _react2.default.createElement(
-											'div',
-											{ className: 'row' },
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-md-4' },
-													_react2.default.createElement(_FaultTriggerCount2.default, null)
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-md-4' },
-													_react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-md-4' },
-													_react2.default.createElement(_DescriptionCounts2.default, null)
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-md-4' },
-													_react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-md-4' },
-													_react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-md-4' },
-													_react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
-											)
-									);
-							}
-					}
-			}]);
+	  _createClass(Dashboard, [{
+	    key: 'render',
+	    value: function render() {
+	      var url = window.location.href;
+	      if (url.includes("/live")) {
+	        // render live page	
+	        return _react2.default.createElement(_LiveDashboard2.default, null);
+	      } else {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-lg-6' },
+	            _react2.default.createElement(_FaultTriggerCount2.default, null)
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-lg-6' },
+	            _react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-lg-6' },
+	            _react2.default.createElement(_DescriptionCounts2.default, null)
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-lg-6' },
+	            _react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
+	          )
+	        );
+	      }
+	    }
+	  }]);
 
-			return Dashboard;
+	  return Dashboard;
 	}(_react2.default.Component);
 
 	exports.default = Dashboard;
@@ -21461,24 +21451,26 @@
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 
-				var ref = firebase.database().ref('streaming_data');
-				var only_errors = ref.orderByChild("Sucess").equalTo(0);
+				var ref = firebase.database().ref('streaming-data');
+				var only_errors = ref.orderByChild("Success").equalTo(0);
 				var _this = this;
 
 				only_errors.on("value", function (snapshot) {
 					var data = snapshot.val();
 					var fault_trigger_counts = {};
-					Object.keys(data).forEach(function (key) {
-						var fault_trigger = data[key]["Fault Trigger"];
-						if (fault_trigger in fault_trigger_counts) {
-							fault_trigger_counts[fault_trigger] += 1;
-						} else {
-							fault_trigger_counts[fault_trigger] = 0;
-						}
-					});
-					var fault_trigger = Object.keys(fault_trigger_counts);
-					var fault_trigger_cnts = Object.values(fault_trigger_counts);
-					_this.setState({ "faultTriggerCount": { "fault_trigger": fault_trigger, "fault_trigger_cnts": fault_trigger_cnts }, loaded: true });
+					if (data != null) {
+						Object.keys(data).forEach(function (key) {
+							var fault_trigger = data[key]["Fault Trigger"];
+							if (fault_trigger in fault_trigger_counts) {
+								fault_trigger_counts[fault_trigger] += 1;
+							} else {
+								fault_trigger_counts[fault_trigger] = 0;
+							}
+						});
+						var fault_trigger = Object.keys(fault_trigger_counts);
+						var fault_trigger_cnts = Object.values(fault_trigger_counts);
+						_this.setState({ "faultTriggerCount": { "fault_trigger": fault_trigger, "fault_trigger_cnts": fault_trigger_cnts }, loaded: true });
+					}
 				}, function (errorObject) {
 					console.log("The read failed: " + errorObject.code);
 				});
@@ -57321,43 +57313,44 @@
 		_createClass(FaultTriggerAvgDuration, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				var ref = firebase.database().ref('streaming_data');
-				var only_errors = ref.orderByChild("Sucess").equalTo(0);
+				var ref = firebase.database().ref('streaming-data');
+				var only_errors = ref.orderByChild("Success").equalTo(0);
 				var _this = this;
 
 				only_errors.on("value", function (snapshot) {
 					var data = snapshot.val();
 					var fault_trigger_counts = {};
 					var fault_trigger_durations = {};
-					Object.keys(data).forEach(function (key) {
+					if (data != null) {
+						Object.keys(data).forEach(function (key) {
+							if (data[key]["Duration"] != null) {
+								var fault_trigger = data[key]["Fault Trigger"];
+								if (fault_trigger in fault_trigger_counts) {
+									fault_trigger_counts[fault_trigger] += 1;
+								} else {
+									fault_trigger_counts[fault_trigger] = 0;
+								}
 
-						if (data[key]["Duration"] != null) {
-							var fault_trigger = data[key]["Fault Trigger"];
-							if (fault_trigger in fault_trigger_counts) {
-								fault_trigger_counts[fault_trigger] += 1;
-							} else {
-								fault_trigger_counts[fault_trigger] = 0;
+								if (fault_trigger in fault_trigger_durations) {
+									fault_trigger_durations[fault_trigger] += _this.hmsToSecondsOnly(data[key]["Duration"]);
+								} else {
+									fault_trigger_durations[fault_trigger] = _this.hmsToSecondsOnly(data[key]["Duration"]);
+								}
 							}
+						});
 
-							if (fault_trigger in fault_trigger_durations) {
-								fault_trigger_durations[fault_trigger] += _this.hmsToSecondsOnly(data[key]["Duration"]);
-							} else {
-								fault_trigger_durations[fault_trigger] = _this.hmsToSecondsOnly(data[key]["Duration"]);
-							}
-						}
-					});
+						var fault_trigger_duration_avg = {};
+						Object.keys(fault_trigger_counts).forEach(function (key) {
+							fault_trigger_duration_avg[key] = fault_trigger_durations[key] / fault_trigger_counts[key];
+						});
 
-					var fault_trigger_duration_avg = {};
-					Object.keys(fault_trigger_counts).forEach(function (key) {
-						fault_trigger_duration_avg[key] = fault_trigger_durations[key] / fault_trigger_counts[key];
-					});
+						var fault_trigger = Object.keys(fault_trigger_duration_avg);
+						var fault_trigger_avg_duration = Object.values(fault_trigger_duration_avg);
 
-					var fault_trigger = Object.keys(fault_trigger_duration_avg);
-					var fault_trigger_avg_duration = Object.values(fault_trigger_duration_avg);
-
-					console.log(fault_trigger);
-					console.log(fault_trigger_avg_duration);
-					_this.setState({ "faultTriggerAvgDuration": { "fault_trigger": fault_trigger, "fault_trigger_avg_duration": fault_trigger_avg_duration }, loaded: true });
+						console.log(fault_trigger);
+						console.log(fault_trigger_avg_duration);
+						_this.setState({ "faultTriggerAvgDuration": { "fault_trigger": fault_trigger, "fault_trigger_avg_duration": fault_trigger_avg_duration }, loaded: true });
+					}
 				}, function (errorObject) {
 					console.log("The read failed: " + errorObject.code);
 				});
@@ -57466,24 +57459,26 @@
 		_createClass(DescriptionCounts, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				var ref = firebase.database().ref('streaming_data');
-				var only_errors = ref.orderByChild("Sucess").equalTo(0);
+				var ref = firebase.database().ref('streaming-data');
+				var only_errors = ref.orderByChild("Success").equalTo(0);
 				var _this = this;
 
 				only_errors.on("value", function (snapshot) {
 					var data = snapshot.val();
 					var description_counts = {};
-					Object.keys(data).forEach(function (key) {
-						var description = data[key]["Description"];
-						if (description in description_counts) {
-							description_counts[description] += 1;
-						} else {
-							description_counts[description] = 0;
-						}
-					});
-					var descriptions = Object.keys(description_counts);
-					var description_cnts = Object.values(description_counts);
-					_this.setState({ "descriptionCounts": { "description": descriptions, "description_cnt": description_cnts }, loaded: true });
+					if (data != null) {
+						Object.keys(data).forEach(function (key) {
+							var description = data[key]["Description"];
+							if (description in description_counts) {
+								description_counts[description] += 1;
+							} else {
+								description_counts[description] = 0;
+							}
+						});
+						var descriptions = Object.keys(description_counts);
+						var description_cnts = Object.values(description_counts);
+						_this.setState({ "descriptionCounts": { "description": descriptions, "description_cnt": description_cnts }, loaded: true });
+					}
 				}, function (errorObject) {
 					console.log("The read failed: " + errorObject.code);
 				});
@@ -57568,53 +57563,63 @@
 		function LiveDashboard(props) {
 			_classCallCheck(this, LiveDashboard);
 
-			var _this = _possibleConstructorReturn(this, (LiveDashboard.__proto__ || Object.getPrototypeOf(LiveDashboard)).call(this, props));
+			var _this2 = _possibleConstructorReturn(this, (LiveDashboard.__proto__ || Object.getPrototypeOf(LiveDashboard)).call(this, props));
 
-			_this.state = {};
-			return _this;
+			_this2.state = {};
+			return _this2;
 		}
 
 		_createClass(LiveDashboard, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+
+				var ref = firebase.database().ref('streaming-data');
+				var _this = this;
+
+				ref.on("value", function (snapshot) {
+					var data = snapshot.val();
+					var time_step_probs = {};
+					if (data != null) {
+						Object.keys(data).forEach(function (key) {
+							var time_step = data[key]["Occurred"];
+							var prob_of_time_step = data[key]["Prob"];
+							time_step_probs[time_step] = prob_of_time_step;
+						});
+
+						var time_steps = Object.keys(time_step_probs);
+						var probs = Object.values(time_step_probs);
+						_this.setState({ "timeSteps": { "time_steps": time_steps, "probs": probs }, loaded: true });
+					}
+				}, function (errorObject) {
+					console.log("The read failed: " + errorObject.code);
+				});
+			}
+		}, {
 			key: 'render',
 			value: function render() {
-				var data = {
-					labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050],
-					datasets: [{
-						data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
-						label: "Africa",
-						borderColor: "#3e95cd",
-						fill: false
-					}, {
-						data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
-						label: "Asia",
-						borderColor: "#8e5ea2",
-						fill: false
-					}, {
-						data: [168, 170, 178, 190, 203, 276, 408, 547, 675, 734],
-						label: "Europe",
-						borderColor: "#3cba9f",
-						fill: false
-					}, {
-						data: [40, 20, 10, 16, 24, 38, 74, 167, 508, 784],
-						label: "Latin America",
-						borderColor: "#e8c3b9",
-						fill: false
-					}, {
-						data: [6, 3, 2, 2, 7, 26, 82, 172, 312, 433],
-						label: "North America",
-						borderColor: "#c45850",
-						fill: false
-					}]
-				};
 
-				var options = {
-					title: {
-						display: true,
-						text: 'World population per region (in millions)'
-					}
-				};
+				if (this.state.timeSteps !== undefined) {
+					console.log(this.state);
+					var chartData = {
+						labels: this.state.timeSteps["time_steps"],
+						datasets: [{
+							label: "Time Step",
+							data: this.state.timeSteps["probs"]
+						}]
+					};
 
-				return _react2.default.createElement(_reactChartjs.Line, { data: data, options: options });
+					var chartOptions = {
+						legend: { display: false },
+						title: {
+							display: true,
+							text: 'Live Streaming IoT Data'
+						}
+					};
+
+					return _react2.default.createElement(_reactChartjs.Line, { data: chartData, options: chartOptions });
+				} else {
+					return _react2.default.createElement('div', null);
+				}
 			}
 		}]);
 
@@ -57625,15 +57630,6 @@
 
 /***/ }),
 /* 496 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(5);
-
-
-/***/ }),
-/* 497 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -57649,6 +57645,15 @@
 	    storageBucket: "yhack-187804.appspot.com",
 	    messagingSenderId: "909982270042"
 	};
+
+/***/ }),
+/* 497 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(5);
+
 
 /***/ })
 /******/ ]);

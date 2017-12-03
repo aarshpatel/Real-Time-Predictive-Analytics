@@ -11,24 +11,26 @@ class FaultTriggerCount extends React.Component {
 
 	componentDidMount() {
 		
-		let ref = firebase.database().ref('streaming_data');
-		let only_errors = ref.orderByChild("Sucess").equalTo(0);
+		let ref = firebase.database().ref('streaming-data');
+		let only_errors = ref.orderByChild("Success").equalTo(0);
 		let _this = this;
 
 		only_errors.on("value", function(snapshot) {
 		  	var data = snapshot.val();
 		  	var fault_trigger_counts = {}
-		  	Object.keys(data).forEach(key => {
-		  		var fault_trigger = data[key]["Fault Trigger"]
-		  		if(fault_trigger in fault_trigger_counts) {
-		  			fault_trigger_counts[fault_trigger] += 1
-		  		} else {
-		  			fault_trigger_counts[fault_trigger] = 0
-		  		}
-			});
-		  	let fault_trigger = Object.keys(fault_trigger_counts)
-		  	let fault_trigger_cnts = Object.values(fault_trigger_counts)
-		  	_this.setState({"faultTriggerCount": {"fault_trigger": fault_trigger, "fault_trigger_cnts": fault_trigger_cnts}, loaded: true})
+		  	if(data != null) {
+			  	Object.keys(data).forEach(key => {
+			  		var fault_trigger = data[key]["Fault Trigger"]
+			  		if(fault_trigger in fault_trigger_counts) {
+			  			fault_trigger_counts[fault_trigger] += 1
+			  		} else {
+			  			fault_trigger_counts[fault_trigger] = 0
+			  		}
+				});
+			  	let fault_trigger = Object.keys(fault_trigger_counts)
+			  	let fault_trigger_cnts = Object.values(fault_trigger_counts)
+			  	_this.setState({"faultTriggerCount": {"fault_trigger": fault_trigger, "fault_trigger_cnts": fault_trigger_cnts}, loaded: true})
+			  }
 		}, function (errorObject) {
 		  console.log("The read failed: " + errorObject.code);
 		});

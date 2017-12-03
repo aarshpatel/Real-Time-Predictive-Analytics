@@ -21,22 +21,16 @@ class Dashboard extends React.Component {
   	}
   	else {
 		return (<div className="row">
-				<div className="col-md-4">
+				<div className="col-lg-6">
 					<FaultTriggerCount />
 			    </div>
-				<div className="col-md-4">
+				<div className="col-lg-6">
 					<FaultTriggerAvgDuration />
 			    </div>
-				<div className="col-md-4">
+				<div className="col-lg-6">
 					<DescriptionCounts />
 			    </div>
-				<div className="col-md-4">
-					<FaultTriggerAvgDuration />
-			    </div>
-			    <div className="col-md-4">
-					<FaultTriggerAvgDuration />
-			    </div>
-			    <div className="col-md-4">
+				<div className="col-lg-6">
 					<FaultTriggerAvgDuration />
 			    </div>
 			</div>
