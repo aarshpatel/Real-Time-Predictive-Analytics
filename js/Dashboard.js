@@ -4,6 +4,8 @@ import FaultTriggerCount from './FaultTriggerCount.js'
 import FaultTriggerAvgDuration from './FaultTriggerAvgDuration.js'
 import DescriptionCounts from './DescriptionCounts.js';
 import LiveDashboard from './LiveDashboard.js';
+import StudIDCounts from './StudIDCounts.js';
+import OperationModeCounts from './OperationModeCounts.js';
 import config from './firebase-config';
 
 class Dashboard extends React.Component {
@@ -20,20 +22,28 @@ class Dashboard extends React.Component {
   		return <LiveDashboard />
   	}
   	else {
-		return (<div className="row">
-				<div className="col-lg-6">
+		return (<div><div id="first-row" className="row">
+				<div className="col-lg-4">
 					<FaultTriggerCount />
 			    </div>
-				<div className="col-lg-6">
+				<div className="col-lg-4">
 					<FaultTriggerAvgDuration />
 			    </div>
-				<div className="col-lg-6">
+				<div className="col-lg-4">
 					<DescriptionCounts />
+			    </div></div>
+			    <div className="w-100"></div>
+			    <div className="row">
+				<div className="col-lg-4">
+					<StudIDCounts />
 			    </div>
-				<div className="col-lg-6">
-					<FaultTriggerAvgDuration />
+			    <div className="col-lg-4">
+					<OperationModeCounts />
 			    </div>
-			</div>
+			    <div className="col-lg-4">
+					<OperationModeCounts />
+			    </div>
+			</div></div>
 		);
   	}
   	

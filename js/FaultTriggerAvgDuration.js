@@ -84,6 +84,7 @@ class FaultTriggerAvgDuration extends React.Component {
 		      legend: { display: false },
 		      title: {
 		        display: true,
+		       	fontSize: 20,
 		        text: 'Fault Trigger AVG Duration'
 		      }
 		    };

@@ -61,7 +61,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(497);
+	var _reactDom = __webpack_require__(498);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -76,7 +76,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+			value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -105,7 +105,15 @@
 
 	var _LiveDashboard2 = _interopRequireDefault(_LiveDashboard);
 
-	var _firebaseConfig = __webpack_require__(496);
+	var _StudIDCounts = __webpack_require__(496);
+
+	var _StudIDCounts2 = _interopRequireDefault(_StudIDCounts);
+
+	var _OperationModeCounts = __webpack_require__(560);
+
+	var _OperationModeCounts2 = _interopRequireDefault(_OperationModeCounts);
+
+	var _firebaseConfig = __webpack_require__(497);
 
 	var _firebaseConfig2 = _interopRequireDefault(_firebaseConfig);
 
@@ -118,55 +126,74 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Dashboard = function (_React$Component) {
-	  _inherits(Dashboard, _React$Component);
+			_inherits(Dashboard, _React$Component);
 
-	  function Dashboard(props) {
-	    _classCallCheck(this, Dashboard);
+			function Dashboard(props) {
+					_classCallCheck(this, Dashboard);
 
-	    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
+					var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
-	    _this.state = {};
-	    firebase.initializeApp(_firebaseConfig2.default);
-	    return _this;
-	  }
+					_this.state = {};
+					firebase.initializeApp(_firebaseConfig2.default);
+					return _this;
+			}
 
-	  _createClass(Dashboard, [{
-	    key: 'render',
-	    value: function render() {
-	      var url = window.location.href;
-	      if (url.includes("/live")) {
-	        // render live page	
-	        return _react2.default.createElement(_LiveDashboard2.default, null);
-	      } else {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-lg-6' },
-	            _react2.default.createElement(_FaultTriggerCount2.default, null)
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-lg-6' },
-	            _react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-lg-6' },
-	            _react2.default.createElement(_DescriptionCounts2.default, null)
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-lg-6' },
-	            _react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
-	          )
-	        );
-	      }
-	    }
-	  }]);
+			_createClass(Dashboard, [{
+					key: 'render',
+					value: function render() {
+							var url = window.location.href;
+							if (url.includes("/live")) {
+									// render live page	
+									return _react2.default.createElement(_LiveDashboard2.default, null);
+							} else {
+									return _react2.default.createElement(
+											'div',
+											null,
+											_react2.default.createElement(
+													'div',
+													{ id: 'first-row', className: 'row' },
+													_react2.default.createElement(
+															'div',
+															{ className: 'col-lg-4' },
+															_react2.default.createElement(_FaultTriggerCount2.default, null)
+													),
+													_react2.default.createElement(
+															'div',
+															{ className: 'col-lg-4' },
+															_react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
+													),
+													_react2.default.createElement(
+															'div',
+															{ className: 'col-lg-4' },
+															_react2.default.createElement(_DescriptionCounts2.default, null)
+													)
+											),
+											_react2.default.createElement('div', { className: 'w-100' }),
+											_react2.default.createElement(
+													'div',
+													{ className: 'row' },
+													_react2.default.createElement(
+															'div',
+															{ className: 'col-lg-4' },
+															_react2.default.createElement(_StudIDCounts2.default, null)
+													),
+													_react2.default.createElement(
+															'div',
+															{ className: 'col-lg-4' },
+															_react2.default.createElement(_OperationModeCounts2.default, null)
+													),
+													_react2.default.createElement(
+															'div',
+															{ className: 'col-lg-4' },
+															_react2.default.createElement(_OperationModeCounts2.default, null)
+													)
+											)
+									);
+							}
+					}
+			}]);
 
-	  return Dashboard;
+			return Dashboard;
 	}(_react2.default.Component);
 
 	exports.default = Dashboard;
@@ -21478,21 +21505,21 @@
 		}, {
 			key: 'render',
 			value: function render() {
-
 				if (this.state.faultTriggerCount !== undefined) {
 					console.log(this.state);
 					var chartData = {
 						labels: this.state.faultTriggerCount["fault_trigger"],
 						datasets: [{
 							label: "Fault Trigger Counts",
+							backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
 							data: this.state.faultTriggerCount["fault_trigger_cnts"]
 						}]
 					};
-
 					var chartOptions = {
 						legend: { display: false },
 						title: {
 							display: true,
+							fontSize: 20,
 							text: 'Fault Trigger Counts'
 						}
 					};
@@ -57388,6 +57415,7 @@
 						legend: { display: false },
 						title: {
 							display: true,
+							fontSize: 20,
 							text: 'Fault Trigger AVG Duration'
 						}
 					};
@@ -57484,6 +57512,16 @@
 				});
 			}
 		}, {
+			key: 'getRandomColor',
+			value: function getRandomColor() {
+				var letters = '0123456789ABCDEF'.split('');
+				var color = '#';
+				for (var i = 0; i < 6; i++) {
+					color += letters[Math.floor(Math.random() * 16)];
+				}
+				return color;
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 
@@ -57492,6 +57530,12 @@
 					var chartData = {
 						labels: this.state.descriptionCounts["description"],
 						datasets: [{
+							fillColor: this.getRandomColor(),
+							strokeColor: "#ff6c23",
+							pointColor: "#fff",
+							pointStrokeColor: "#ff6c23",
+							pointHighlightFill: "#fff",
+							pointHighlightStroke: "#ff6c23",
 							label: "Fault Description Counts",
 							data: this.state.descriptionCounts["description_cnt"]
 						}]
@@ -57501,6 +57545,7 @@
 						legend: { display: false },
 						title: {
 							display: true,
+							fontSize: 20,
 							text: 'Fault Description Counts'
 						}
 					};
@@ -57597,13 +57642,12 @@
 		}, {
 			key: 'render',
 			value: function render() {
-
 				if (this.state.timeSteps !== undefined) {
-					console.log(this.state);
 					var chartData = {
 						labels: this.state.timeSteps["time_steps"],
 						datasets: [{
-							label: "Time Step",
+							label: "Probability",
+							borderColor: "#42b9ff",
 							data: this.state.timeSteps["probs"]
 						}]
 					};
@@ -57612,8 +57656,16 @@
 						legend: { display: false },
 						title: {
 							display: true,
-							text: 'Live Streaming IoT Data'
-						}
+							text: 'Live Streaming IoT Data',
+							fontSize: 50
+						},
+						xAxes: [{
+							type: 'time',
+							ticks: {
+								autoSkip: true,
+								maxTicksLimit: 5
+							}
+						}]
 					};
 
 					return _react2.default.createElement(_reactChartjs.Line, { data: chartData, options: chartOptions });
@@ -57630,6 +57682,114 @@
 
 /***/ }),
 /* 496 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _axios = __webpack_require__(160);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _reactChartjs = __webpack_require__(187);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var StudIDCounts = function (_React$Component) {
+		_inherits(StudIDCounts, _React$Component);
+
+		function StudIDCounts(props) {
+			_classCallCheck(this, StudIDCounts);
+
+			var _this2 = _possibleConstructorReturn(this, (StudIDCounts.__proto__ || Object.getPrototypeOf(StudIDCounts)).call(this, props));
+
+			_this2.state = {};
+			return _this2;
+		}
+
+		_createClass(StudIDCounts, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+
+				var ref = firebase.database().ref('streaming-data');
+				var only_errors = ref.orderByChild("Success").equalTo(0);
+				var _this = this;
+
+				only_errors.on("value", function (snapshot) {
+					var data = snapshot.val();
+					var studid_counts = {};
+					if (data != null) {
+						Object.keys(data).forEach(function (key) {
+							var studid = data[key]["StudID"];
+							console.log(studid);
+							if (studid != undefined) {
+								// only get the non-undefined submodules
+								if (studid in studid_counts) {
+									studid_counts[studid] += 1;
+								} else {
+									studid_counts[studid] = 0;
+								}
+							}
+						});
+						var studid = Object.keys(studid_counts);
+						var studid_cnts = Object.values(studid_counts);
+						_this.setState({ "studIDCounts": { "studid": studid, "studid_counts": studid_cnts }, loaded: true });
+					}
+				}, function (errorObject) {
+					console.log("The read failed: " + errorObject.code);
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				if (this.state.studIDCounts !== undefined) {
+					console.log(this.state);
+					var chartData = {
+						labels: this.state.studIDCounts["studid"],
+						datasets: [{
+							label: "# of times module has failed",
+							data: this.state.studIDCounts["studid_counts"]
+						}]
+					};
+
+					var chartOptions = {
+						legend: { display: false },
+						title: {
+							display: true,
+							fontSize: 20,
+							text: 'Stud-ID Error Counts'
+						}
+					};
+
+					return _react2.default.createElement(_reactChartjs.HorizontalBar, { data: chartData, options: chartOptions });
+				} else {
+					return _react2.default.createElement('div', null);
+				}
+			}
+		}]);
+
+		return StudIDCounts;
+	}(_react2.default.Component);
+
+	exports.default = StudIDCounts;
+
+/***/ }),
+/* 497 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -57647,13 +57807,181 @@
 	};
 
 /***/ }),
-/* 497 */
+/* 498 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = __webpack_require__(5);
 
+
+/***/ }),
+/* 499 */,
+/* 500 */,
+/* 501 */,
+/* 502 */,
+/* 503 */,
+/* 504 */,
+/* 505 */,
+/* 506 */,
+/* 507 */,
+/* 508 */,
+/* 509 */,
+/* 510 */,
+/* 511 */,
+/* 512 */,
+/* 513 */,
+/* 514 */,
+/* 515 */,
+/* 516 */,
+/* 517 */,
+/* 518 */,
+/* 519 */,
+/* 520 */,
+/* 521 */,
+/* 522 */,
+/* 523 */,
+/* 524 */,
+/* 525 */,
+/* 526 */,
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */,
+/* 531 */,
+/* 532 */,
+/* 533 */,
+/* 534 */,
+/* 535 */,
+/* 536 */,
+/* 537 */,
+/* 538 */,
+/* 539 */,
+/* 540 */,
+/* 541 */,
+/* 542 */,
+/* 543 */,
+/* 544 */,
+/* 545 */,
+/* 546 */,
+/* 547 */,
+/* 548 */,
+/* 549 */,
+/* 550 */,
+/* 551 */,
+/* 552 */,
+/* 553 */,
+/* 554 */,
+/* 555 */,
+/* 556 */,
+/* 557 */,
+/* 558 */,
+/* 559 */,
+/* 560 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _axios = __webpack_require__(160);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _reactChartjs = __webpack_require__(187);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var OperationModeCounts = function (_React$Component) {
+		_inherits(OperationModeCounts, _React$Component);
+
+		function OperationModeCounts(props) {
+			_classCallCheck(this, OperationModeCounts);
+
+			var _this2 = _possibleConstructorReturn(this, (OperationModeCounts.__proto__ || Object.getPrototypeOf(OperationModeCounts)).call(this, props));
+
+			_this2.state = {};
+			return _this2;
+		}
+
+		_createClass(OperationModeCounts, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+
+				var ref = firebase.database().ref('streaming-data');
+				var only_errors = ref.orderByChild("Success").equalTo(0);
+				var _this = this;
+
+				only_errors.on("value", function (snapshot) {
+					var data = snapshot.val();
+					var operation_counts = {};
+					if (data != null) {
+						Object.keys(data).forEach(function (key) {
+							var operation = data[key]["Operation Mode"];
+							if (operation != "None") {
+								// only get the non-undefined submodules
+								if (operation in operation_counts) {
+									operation_counts[operation] += 1;
+								} else {
+									operation_counts[operation] = 0;
+								}
+							}
+						});
+						var operation = Object.keys(operation_counts);
+						var operation_cnts = Object.values(operation_counts);
+						_this.setState({ "operationCounts": { "operation": operation, "operation_counts": operation_cnts }, loaded: true });
+					}
+				}, function (errorObject) {
+					console.log("The read failed: " + errorObject.code);
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				if (this.state.operationCounts !== undefined) {
+					var chartData = {
+						labels: this.state.operationCounts["operation"],
+						datasets: [{
+							label: "# of times this operation mode was on when the module failed",
+							backgroundColor: ["#e8c3b9", "#c45850"],
+							data: this.state.operationCounts["operation_counts"]
+						}]
+					};
+
+					var chartOptions = {
+						legend: { display: false },
+						title: {
+							display: true,
+							fontSize: 20,
+							text: 'Operation Mode Counts'
+						}
+					};
+
+					return _react2.default.createElement(_reactChartjs.Doughnut, { data: chartData, options: chartOptions });
+				} else {
+					return _react2.default.createElement('div', null);
+				}
+			}
+		}]);
+
+		return OperationModeCounts;
+	}(_react2.default.Component);
+
+	exports.default = OperationModeCounts;
 
 /***/ })
 /******/ ]);

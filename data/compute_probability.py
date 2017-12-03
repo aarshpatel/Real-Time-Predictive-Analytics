@@ -2,6 +2,8 @@ import pandas as pd
 import time
 import pyrebase
 import math
+import logging
+
 
 class ComputeProbability:
     def __init__(self, window_size):
@@ -10,6 +12,24 @@ class ComputeProbability:
         self.df = pd.read_csv("fault_errors_final.csv")
         self.dp_array = []
         self.firebase, self.token = self.init_firebase()
+        self.logger = self.setup_logging()
+
+    def setup_logging(self):
+        logger = logging.getLogger(__name__)
+        logger.setLevel(logging.INFO)
+
+        # create a file handler
+        handler = logging.FileHandler('../streaming_data.log')
+        handler.setLevel(logging.INFO)
+
+        # create a logging format
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+
+        # add the handlers to the logger
+        logger.addHandler(handler)
+
+        return logger 
 
     def init_firebase(self):
         config = {
@@ -41,7 +61,7 @@ class ComputeProbability:
 
     def get_data_points(self):                
         for idx, row in self.df.iterrows():
-            time.sleep(3)
+            time.sleep(1)
             dp = self.compute_error_probability(idx, row)
             yield dp
 
@@ -70,7 +90,7 @@ class ComputeProbability:
 
         # data_point = [None if math.isnan(float(point)) else point for point in data_point]
         data_point = dict(zip(keys, new_data_points))
-        print(data_point)
+        self.logger.info(str(data_point))
         db.child("streaming-data").push(data_point, self.token)
         
 

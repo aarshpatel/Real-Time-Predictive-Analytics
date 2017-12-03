@@ -33,16 +33,14 @@ class LiveDashboard extends React.Component {
 
 	}
 
-
   render() {
-
 	if(this.state.timeSteps !== undefined) {
-			console.log(this.state);
 			var chartData = {
-				labels: this.state.timeSteps["time_steps"], 
+				labels: this.state.timeSteps["time_steps"],
 				datasets: [
 					{
-						label: "Time Step", 
+						label: "Probability", 
+						borderColor: "#42b9ff",
 						data: this.state.timeSteps["probs"]
 					}
 				]
@@ -52,8 +50,16 @@ class LiveDashboard extends React.Component {
 		      legend: { display: false },
 		      title: {
 		        display: true,
-		        text: 'Live Streaming IoT Data'
-		      }
+		        text: 'Live Streaming IoT Data',
+		        fontSize: 50
+		      },
+		      xAxes: [{
+				    type: 'time',
+				    ticks: {
+				        autoSkip: true,
+				        maxTicksLimit: 5
+	    			}
+				}]
 		    };
 
 			return <Line data={chartData} options={chartOptions}/>

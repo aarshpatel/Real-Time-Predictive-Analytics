@@ -38,23 +38,23 @@ class FaultTriggerCount extends React.Component {
 	}
 
 	render() {
-
 		if(this.state.faultTriggerCount !== undefined) {
 			console.log(this.state);
 			var chartData = {
 				labels: this.state.faultTriggerCount["fault_trigger"], 
 				datasets: [
 					{
-						label: "Fault Trigger Counts", 
+						label: "Fault Trigger Counts",
+						backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
 						data: this.state.faultTriggerCount["fault_trigger_cnts"]
 					}
 				]
 			};
-
 			var chartOptions =  {
 		      legend: { display: false },
 		      title: {
 		        display: true,
+		 		fontSize: 20,
 		        text: 'Fault Trigger Counts'
 		      }
 		    };

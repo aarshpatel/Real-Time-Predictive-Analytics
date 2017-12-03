@@ -35,6 +35,15 @@ class DescriptionCounts extends React.Component {
 		});
 	}
 
+	getRandomColor() {
+	    var letters = '0123456789ABCDEF'.split('');
+	    var color = '#';
+	    for (var i = 0; i < 6; i++ ) {
+	        color += letters[Math.floor(Math.random() * 16)];
+	    }
+	    return color;
+	}
+
 	render() {
 
 		if(this.state.descriptionCounts !== undefined) {
@@ -43,6 +52,12 @@ class DescriptionCounts extends React.Component {
 				labels: this.state.descriptionCounts["description"], 
 				datasets: [
 					{
+						fillColor: this.getRandomColor(),
+						strokeColor : "#ff6c23",
+		                pointColor : "#fff",
+		                pointStrokeColor : "#ff6c23",
+		                pointHighlightFill: "#fff",
+		                pointHighlightStroke: "#ff6c23",
 						label: "Fault Description Counts", 
 						data: this.state.descriptionCounts["description_cnt"]
 					}
@@ -53,6 +68,7 @@ class DescriptionCounts extends React.Component {
 		      legend: { display: false },
 		      title: {
 		        display: true,
+				fontSize: 20,
 		        text: 'Fault Description Counts'
 		      }
 		    };
