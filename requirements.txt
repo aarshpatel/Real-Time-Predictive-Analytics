@@ -1,4 +1,4 @@
-Flask==0.10.1
+Flask
 itsdangerous==0.24
 Jinja2==2.8
 MarkupSafe==0.23
@@ -7,3 +7,5 @@ wheel==0.24.0
 twilio~=6.0.0
 pandas
 webpack
+Node
+React
