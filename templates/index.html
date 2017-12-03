@@ -1,0 +1,36 @@
+<head>
+	<link text="text/css" rel="stylesheet" href="../static/main.css">
+	<link text="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+	<div id="wrap">
+		<div class="navbar navbar-default navbar-fixed-top">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a id="navbar-title" class="navbar-brand" href="/">IoT Data Analysis and Alert System</a>
+	        </div>
+	         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav">
+	           		<li><a id="navbar-live-text" href="/live">Live Analytics</a></li>
+	           	</ul>
+	          </div>
+	      </div>
+	    </div>
+
+	    <main id="content" role="main" class="container">
+	  		<div id="reactEntry"></div>
+	  	</main>
+	</div>
+
+  <!-- Attach React components -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='bundle.js') }}"></script>
+
+</body>
