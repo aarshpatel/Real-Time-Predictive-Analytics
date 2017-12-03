@@ -79,3 +79,8 @@ We learned a lot about the IoT framework and predictive analysis on streaming da
 - Varun Sharma
 - Chenhao Huang 
 
+## Screenshots
+
+![Alt text](./screenshot1.png?raw=true)
+
+![Alt text](./screenshot2.png?raw=true)
