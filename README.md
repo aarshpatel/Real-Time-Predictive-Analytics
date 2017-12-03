@@ -58,6 +58,12 @@ Then run the Flask app:
 python app.py
 ```
 
+To generate a stream of IoT data
+
+```
+python data/generate_stream.py
+```
+
 ## How we built it
 In order to perform predictive analysis, we implemented an anomaly detection algorithm that takes the temporal nature of the data into consideration. We implemented the system on top of the Flask framework, with a React front-end. In addition, we used Firebase as a central data repository and hosted the app on Google's App Engine. We also used the Twilio API in order to implement text-message alerts.
 
