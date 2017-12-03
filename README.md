@@ -1,9 +1,6 @@
+# Predictive Analysis on Real-Time Machine Performance Data
 
-# React + Flask starter kit
-
-A quick starter repo that includes Flask and React, with Babel and Webpack. For proof-of-concept projects, workshop settings, etc where you don't want to worry about developer setup or writing config files.
-
-TLDR; for the quick and dirty setup, install your dependencies:
+Our app is a platform for predictive analysis on real-time machine performance data from Black & Decker. Hence, its primary purpose is to anticipate whether a machine would fail based on the given data. A secondary objective was to build an IoT dashboard to visualize results of exploratory data analysis (e.g. summary statistics).
 
 ```
 pip install virtualenv
@@ -12,7 +9,7 @@ pip install -r requirements.txt
 npm install -g webpack; npm install
 ```
 
-Then in two separate tabs run `python app.py` and `webpack --watch`. Make edits to `js/Hello.js` and `app.py` to edit the frontend and backend, respectively.
+Then in two separate tabs run `python app.py` and `webpack --watch`. 
 
 These steps are explained in more detail below.
 

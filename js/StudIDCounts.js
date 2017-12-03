@@ -48,6 +48,7 @@ class StudIDCounts extends React.Component {
 				datasets: [
 					{
 						label: "# of times module has failed", 
+						backgroundColor: ["#3cba9f","#e8c3b9"],
 						data: this.state.studIDCounts["studid_counts"]
 					}
 				]

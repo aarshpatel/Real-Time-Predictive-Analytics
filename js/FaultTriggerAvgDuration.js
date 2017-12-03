@@ -89,7 +89,7 @@ class FaultTriggerAvgDuration extends React.Component {
 		      }
 		    };
 
-			return <Bar data={chartData} options={chartOptions}/>
+			return <Bar height={250} data={chartData} options={chartOptions}/>
 		}else {
 			return <div></div>;
 		}

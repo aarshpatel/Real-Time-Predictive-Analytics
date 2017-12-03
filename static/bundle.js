@@ -61,7 +61,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(498);
+	var _reactDom = __webpack_require__(499);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -109,11 +109,11 @@
 
 	var _StudIDCounts2 = _interopRequireDefault(_StudIDCounts);
 
-	var _OperationModeCounts = __webpack_require__(560);
+	var _OperationModeCounts = __webpack_require__(497);
 
 	var _OperationModeCounts2 = _interopRequireDefault(_OperationModeCounts);
 
-	var _firebaseConfig = __webpack_require__(497);
+	var _firebaseConfig = __webpack_require__(498);
 
 	var _firebaseConfig2 = _interopRequireDefault(_firebaseConfig);
 
@@ -159,7 +159,7 @@
 							),
 							_react2.default.createElement(
 								'div',
-								{ className: 'col-md-4' },
+								{ className: 'col-lg-4' },
 								_react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
 							),
 							_react2.default.createElement(
@@ -174,12 +174,12 @@
 							{ className: 'row' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'col-lg-6' },
+								{ className: 'col-md-6' },
 								_react2.default.createElement(_DescriptionCounts2.default, null)
 							),
 							_react2.default.createElement(
 								'div',
-								{ className: 'col-lg-6' },
+								{ className: 'col-md-6' },
 								_react2.default.createElement(_OperationModeCounts2.default, null)
 							)
 						)
@@ -21519,7 +21519,7 @@
 						}
 					};
 
-					return _react2.default.createElement(_reactChartjs.Bar, { data: chartData, options: chartOptions });
+					return _react2.default.createElement(_reactChartjs.Bar, { height: 250, data: chartData, options: chartOptions });
 				} else {
 					return _react2.default.createElement('div', null);
 				}
@@ -57415,7 +57415,7 @@
 						}
 					};
 
-					return _react2.default.createElement(_reactChartjs.Bar, { data: chartData, options: chartOptions });
+					return _react2.default.createElement(_reactChartjs.Bar, { height: 250, data: chartData, options: chartOptions });
 				} else {
 					return _react2.default.createElement('div', null);
 				}
@@ -57607,23 +57607,25 @@
 		_createClass(LiveDashboard, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-
 				var ref = firebase.database().ref('streaming-data');
 				var _this = this;
 
 				ref.on("value", function (snapshot) {
 					var data = snapshot.val();
 					var time_step_probs = {};
+					var status = [];
 					if (data != null) {
 						Object.keys(data).forEach(function (key) {
 							var time_step = data[key]["Occurred"];
 							var prob_of_time_step = data[key]["Prob"];
+							status.push(data[key]["Success"]);
 							time_step_probs[time_step] = prob_of_time_step;
 						});
 
 						var time_steps = Object.keys(time_step_probs);
 						var probs = Object.values(time_step_probs);
-						_this.setState({ "timeSteps": { "time_steps": time_steps, "probs": probs }, loaded: true });
+
+						_this.setState({ "timeSteps": { "time_steps": time_steps, "probs": probs, "status": status } });
 					}
 				}, function (errorObject) {
 					console.log("The read failed: " + errorObject.code);
@@ -57632,13 +57634,57 @@
 		}, {
 			key: 'render',
 			value: function render() {
+
 				if (this.state.timeSteps !== undefined) {
+					var convertLabels = function convertLabels(currentValue, index, array) {
+						if (currentValue == 0) {
+							return "Failure";
+						} else if (currentValue == 1) {
+							return "Warning";
+						} else {
+							return "Normal";
+						}
+					};
+
+					var colorValues = [];
+					var pointSizes = [];
+					var time_steps = this.state.timeSteps["time_steps"].slice(this.state.timeSteps["time_steps"].length - 20, this.state.timeSteps["time_steps"].length);
+					var probs = this.state.timeSteps["probs"].slice(this.state.timeSteps["probs"].length - 20, this.state.timeSteps["probs"].length);
+					var status = this.state.timeSteps["status"];
+
+					var labels = status.map(convertLabels).slice(status.length - 20, status.length);
+
+					console.log("Labels", labels);
+					alert = false;
+
+					if (probs.slice(-1)[0] > .85) {
+						alert = true;
+					}
+
+					if (alert) {
+						alertify.set({ delay: 10000 });
+						alertify.error("Warning. There might be a fault in the system. Please check it out");
+					}
+
+					for (var i = 0; i < probs.length; i++) {
+						if (probs[i] > 0.85) {
+							colorValues.push("#034748");
+							pointSizes.push(7);
+						} else {
+							colorValues.push("#42b9ff");
+							pointSizes.push(4);
+						}
+					}
+
 					var chartData = {
-						labels: this.state.timeSteps["time_steps"],
+						labels: time_steps,
 						datasets: [{
-							label: "Probability",
+							label: "Prob",
 							borderColor: "#42b9ff",
-							data: this.state.timeSteps["probs"]
+							backgroundColor: "rgba(75,192,192,0.4)",
+							pointBackgroundColor: colorValues,
+							pointRadius: pointSizes,
+							data: probs
 						}]
 					};
 
@@ -57753,6 +57799,7 @@
 						labels: this.state.studIDCounts["studid"],
 						datasets: [{
 							label: "# of times module has failed",
+							backgroundColor: ["#3cba9f", "#e8c3b9"],
 							data: this.state.studIDCounts["studid_counts"]
 						}]
 					};
@@ -57780,94 +57827,6 @@
 
 /***/ }),
 /* 497 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = {
-	    apiKey: "AIzaSyCQB7zrf81BKMHP1ZMXcBZvvZn5NVfS_kU",
-	    authDomain: "yhack-187804.firebaseapp.com",
-	    databaseURL: "https://yhack-187804.firebaseio.com",
-	    projectId: "yhack-187804",
-	    storageBucket: "yhack-187804.appspot.com",
-	    messagingSenderId: "909982270042"
-	};
-
-/***/ }),
-/* 498 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(5);
-
-
-/***/ }),
-/* 499 */,
-/* 500 */,
-/* 501 */,
-/* 502 */,
-/* 503 */,
-/* 504 */,
-/* 505 */,
-/* 506 */,
-/* 507 */,
-/* 508 */,
-/* 509 */,
-/* 510 */,
-/* 511 */,
-/* 512 */,
-/* 513 */,
-/* 514 */,
-/* 515 */,
-/* 516 */,
-/* 517 */,
-/* 518 */,
-/* 519 */,
-/* 520 */,
-/* 521 */,
-/* 522 */,
-/* 523 */,
-/* 524 */,
-/* 525 */,
-/* 526 */,
-/* 527 */,
-/* 528 */,
-/* 529 */,
-/* 530 */,
-/* 531 */,
-/* 532 */,
-/* 533 */,
-/* 534 */,
-/* 535 */,
-/* 536 */,
-/* 537 */,
-/* 538 */,
-/* 539 */,
-/* 540 */,
-/* 541 */,
-/* 542 */,
-/* 543 */,
-/* 544 */,
-/* 545 */,
-/* 546 */,
-/* 547 */,
-/* 548 */,
-/* 549 */,
-/* 550 */,
-/* 551 */,
-/* 552 */,
-/* 553 */,
-/* 554 */,
-/* 555 */,
-/* 556 */,
-/* 557 */,
-/* 558 */,
-/* 559 */,
-/* 560 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57972,6 +57931,33 @@
 	}(_react2.default.Component);
 
 	exports.default = OperationModeCounts;
+
+/***/ }),
+/* 498 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = {
+	    apiKey: "AIzaSyCQB7zrf81BKMHP1ZMXcBZvvZn5NVfS_kU",
+	    authDomain: "yhack-187804.firebaseapp.com",
+	    databaseURL: "https://yhack-187804.firebaseio.com",
+	    projectId: "yhack-187804",
+	    storageBucket: "yhack-187804.appspot.com",
+	    messagingSenderId: "909982270042"
+	};
+
+/***/ }),
+/* 499 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(5);
+
 
 /***/ })
 /******/ ]);
