@@ -73,14 +73,6 @@ class DescriptionCounts extends React.Component {
 			return <div></div>;
 		}
 	}
-
-	getData() {
-		axios.get("/get_descriptions")
-			.then((data) => {
-				console.log(data);
-				this.setState({"descriptionCounts": data["data"]})
-			});
-	}
 }
 
 export default DescriptionCounts;

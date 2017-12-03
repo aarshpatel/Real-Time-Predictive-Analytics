@@ -94,14 +94,6 @@ class FaultTriggerAvgDuration extends React.Component {
 			return <div></div>;
 		}
 	}
-
-	getData() {
-		axios.get("/get_trigger_avg_duration")
-			.then((data) => {
-				console.log(data);
-				this.setState({"faultTriggerAvgDuration": data["data"]})
-			});
-	}
 }
 
 export default FaultTriggerAvgDuration;

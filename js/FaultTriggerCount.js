@@ -64,15 +64,6 @@ class FaultTriggerCount extends React.Component {
 			return <div></div>;
 		}
 	}
-
-	getData() {
-		axios.get("/get_trigger_counts")
-			.then((data) => {
-			console.log(data);
-				this.setState({"faultTriggerCount": data["data"], loaded: true})
-			});
-	}
-
 }
 
 export default FaultTriggerCount;
