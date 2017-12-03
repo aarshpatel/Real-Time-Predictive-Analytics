@@ -3,6 +3,7 @@ import time
 import pyrebase
 import math
 import logging
+from twilio.rest import Client
 
 
 class ComputeProbability:
@@ -13,6 +14,20 @@ class ComputeProbability:
         self.dp_array = []
         self.firebase, self.token = self.init_firebase()
         self.logger = self.setup_logging()
+        account_sid = "AC8b677b6d4c1734a8158f94eca0b296b1"
+        auth_token  = "cfba1f36e6c9b60d4547f54b571885a0"
+        self.client = Client(account_sid, auth_token)
+        self.iscooldown = False
+
+    def twiliotext(self,index, prob,treshhold):
+        if not self.iscooldown:
+            message = self.client.messages.create(
+                    to="+14134046003", 
+                    from_="+12486483579",
+                    body=("There's a potential ERROR!",prob))
+            self.iscooldown = True
+            print ("There's a potential ERROR! " + str(index),prob,treshhold,self.iscooldown)
+    
 
     def setup_logging(self):
         logger = logging.getLogger(__name__)
@@ -56,7 +71,15 @@ class ComputeProbability:
                 total += 1
 
         dp = data_point.tolist()
+        treshhold = 0.85
+        prob = float(total) / self.window_size
         dp.append(float(total) / self.window_size)
+        if prob > treshhold:
+            self.twiliotext(index, prob,treshhold)
+        if dp[-2] < 1:
+            self.iscooldown = False
+            print(self.iscooldown,dp[-2])
+        
         return dp
 
     def get_data_points(self):                
