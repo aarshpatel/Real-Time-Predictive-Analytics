@@ -47,5 +47,6 @@ src/train_semeval2018task2/crawler/crawler.properties
 *.egg
 *.pyc
 data/model_swm_300-6-10-low.w2v
-.idea/
+
 node_modules/
+.idea/
