@@ -1,76 +1,75 @@
-#----------------------------------------------------------------------------#
-# Imports
-#----------------------------------------------------------------------------#
-
-from flask import Flask, render_template, request
-import logging
-from logging import Formatter, FileHandler
 import os
+from flask import Flask, render_template, jsonify
+from google.cloud import pubsub_v1 as pubsub
+from get_bigquery_data import get_fault_trigger_counts, get_fault_trigger_avg_duration, get_descriptions
+import json
 
 app = Flask(__name__)
 
-
 @app.route('/')
-def home():
-    return render_template('pages/placeholder.home.html')
+def hello_world():
+  return render_template('index.html')
 
+@app.route('/get_trigger_counts')
+def get_trigger_counts():
+	data = get_fault_trigger_counts()
+	return jsonify(data)
 
-@app.route('/about')
-def about():
-    return render_template('pages/placeholder.about.html')
+@app.route('/get_trigger_avg_duration')
+def get_trigger_avg_duration():
+	data = get_fault_trigger_avg_duration()
+	return jsonify(data)
 
+@app.route("/get_descriptions")
+def get_descriptions_cnts():
+	data = get_descriptions()
+	return jsonify(data)
 
-@app.route('/login')
-def login():
-    form = LoginForm(request.form)
-    return render_template('forms/login.html', form=form)
+@app.route("/live")
+def live_analytics():
+	return render_template("index.html")
 
+@app.route('/pubsub')
+def create_pub_sub_with_bigquery():
+	publisher = pubsub.PublisherClient()
 
-@app.route('/register')
-def register():
-    form = RegisterForm(request.form)
-    return render_template('forms/register.html', form=form)
+	test_data = {
+	    "Device_Name": "Test-Device",
+	    "Active": "false",
+	    "Occurred_": "2016-12-10 12:39:05 UTC",
+	    "Outlet": "1",
+	    "Stud_ID": "",
+	    "Carbody_ID": "",
+	    "Feeder": "--",
+	    "Weldtool": "1",
+	    "Fault__": "10017",
+	    "Fault_Trigger": "SMPS",
+	    "Fixed": "2016-12-10 12:39:06 UTC",
+	    "Duration": "00:00:01",
+	    "Cleared_by": "SMPS",
+	    "Reason": "Self resetted",
+	    "Description": "Measurement line broken",
+	    "Extended_description": "Measurement line circuit disturbed.",
+	    "System_weld__counter": "1389",
+	    "Operation_Mode": "Automatic mode",
+	    "Sub_Index": "0",
+	    "Flag_1": "0",
+	    "Flag_2": "0",
+	    "Flag_3": "0",
+	    "Flag_4": "0"
+  	};
 
+	publish_to_bigquery(publisher, json.dumps(test_data))
 
-@app.route('/forgot')
-def forgot():
-    form = ForgotForm(request.form)
-    return render_template('forms/forgot.html', form=form)
+	return jsonify(test_data)
 
-# Error handlers.
+def publish_to_bigquery(publisher, sample):
+	topic_name = 'projects/{project_id}/topics/{topic}'.format(
+	    project_id='yhack-187804',
+	    topic='addnewentry',  # Set this to something appropriate.
+	)
+	publisher.publish(topic_name, sample.encode('utf-8'))
 
-
-@app.errorhandler(500)
-def internal_error(error):
-    #db_session.rollback()
-    return render_template('errors/500.html'), 500
-
-
-@app.errorhandler(404)
-def not_found_error(error):
-    return render_template('errors/404.html'), 404
-
-if not app.debug:
-    file_handler = FileHandler('error.log')
-    file_handler.setFormatter(
-        Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
-    )
-    app.logger.setLevel(logging.INFO)
-    file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
-    app.logger.info('errors')
-
-#----------------------------------------------------------------------------#
-# Launch.
-#----------------------------------------------------------------------------#
-
-# Default port:
 if __name__ == '__main__':
-    app.run()
+  app.run(debug=True)
 
-# Or specify port manually:
-'''
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
-'''

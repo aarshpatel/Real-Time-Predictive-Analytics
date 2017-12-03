@@ -1,0 +1,32 @@
+{
+  "name": "starter-kit",
+  "version": "1.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "python app.py"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "webpack": "^1.12.12"
+  },
+  "dependencies": {
+    "@google-cloud/pubsub": "^0.15.0",
+    "axios": "^0.17.1",
+    "chart.js": "^2.7.1",
+    "fs": "0.0.1-security",
+    "react": "^0.14.7",
+    "react-chartjs": "^0.8.0",
+    "react-chartjs-2": "^2.6.4",
+    "react-dom": "^0.14.7",
+    "react-loader": "^2.4.2",
+    "reversed": "^1.1.1"
+  }
+}
