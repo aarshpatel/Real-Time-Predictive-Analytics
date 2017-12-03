@@ -76,7 +76,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-			value: true
+		value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -126,74 +126,69 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Dashboard = function (_React$Component) {
-			_inherits(Dashboard, _React$Component);
+		_inherits(Dashboard, _React$Component);
 
-			function Dashboard(props) {
-					_classCallCheck(this, Dashboard);
+		function Dashboard(props) {
+			_classCallCheck(this, Dashboard);
 
-					var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
-					_this.state = {};
-					firebase.initializeApp(_firebaseConfig2.default);
-					return _this;
+			_this.state = {};
+			firebase.initializeApp(_firebaseConfig2.default);
+			return _this;
+		}
+
+		_createClass(Dashboard, [{
+			key: 'render',
+			value: function render() {
+				var url = window.location.href;
+				if (url.includes("/live")) {
+					// render live page	
+					return _react2.default.createElement(_LiveDashboard2.default, null);
+				} else {
+					return _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							'div',
+							{ id: 'first-row', className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-lg-4' },
+								_react2.default.createElement(_FaultTriggerCount2.default, null)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-4' },
+								_react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-lg-4' },
+								_react2.default.createElement(_StudIDCounts2.default, null)
+							)
+						),
+						_react2.default.createElement('div', { className: 'w-50' }),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-lg-6' },
+								_react2.default.createElement(_DescriptionCounts2.default, null)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-lg-6' },
+								_react2.default.createElement(_OperationModeCounts2.default, null)
+							)
+						)
+					);
+				}
 			}
+		}]);
 
-			_createClass(Dashboard, [{
-					key: 'render',
-					value: function render() {
-							var url = window.location.href;
-							if (url.includes("/live")) {
-									// render live page	
-									return _react2.default.createElement(_LiveDashboard2.default, null);
-							} else {
-									return _react2.default.createElement(
-											'div',
-											null,
-											_react2.default.createElement(
-													'div',
-													{ id: 'first-row', className: 'row' },
-													_react2.default.createElement(
-															'div',
-															{ className: 'col-lg-4' },
-															_react2.default.createElement(_FaultTriggerCount2.default, null)
-													),
-													_react2.default.createElement(
-															'div',
-															{ className: 'col-lg-4' },
-															_react2.default.createElement(_FaultTriggerAvgDuration2.default, null)
-													),
-													_react2.default.createElement(
-															'div',
-															{ className: 'col-lg-4' },
-															_react2.default.createElement(_DescriptionCounts2.default, null)
-													)
-											),
-											_react2.default.createElement('div', { className: 'w-100' }),
-											_react2.default.createElement(
-													'div',
-													{ className: 'row' },
-													_react2.default.createElement(
-															'div',
-															{ className: 'col-lg-4' },
-															_react2.default.createElement(_StudIDCounts2.default, null)
-													),
-													_react2.default.createElement(
-															'div',
-															{ className: 'col-lg-4' },
-															_react2.default.createElement(_OperationModeCounts2.default, null)
-													),
-													_react2.default.createElement(
-															'div',
-															{ className: 'col-lg-4' },
-															_react2.default.createElement(_OperationModeCounts2.default, null)
-													)
-											)
-									);
-							}
-					}
-			}]);
-
-			return Dashboard;
+		return Dashboard;
 	}(_react2.default.Component);
 
 	exports.default = Dashboard;
@@ -57530,12 +57525,7 @@
 					var chartData = {
 						labels: this.state.descriptionCounts["description"],
 						datasets: [{
-							fillColor: this.getRandomColor(),
-							strokeColor: "#ff6c23",
-							pointColor: "#fff",
-							pointStrokeColor: "#ff6c23",
-							pointHighlightFill: "#fff",
-							pointHighlightStroke: "#ff6c23",
+							backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
 							label: "Fault Description Counts",
 							data: this.state.descriptionCounts["description_cnt"]
 						}]

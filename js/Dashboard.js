@@ -26,21 +26,18 @@ class Dashboard extends React.Component {
 				<div className="col-lg-4">
 					<FaultTriggerCount />
 			    </div>
-				<div className="col-lg-4">
+				<div className="col-md-4">
 					<FaultTriggerAvgDuration />
 			    </div>
 				<div className="col-lg-4">
-					<DescriptionCounts />
-			    </div></div>
-			    <div className="w-100"></div>
-			    <div className="row">
-				<div className="col-lg-4">
 					<StudIDCounts />
+			    </div></div>
+			     <div className="w-50"></div>
+			    <div className="row">
+				<div className="col-lg-6">
+					<DescriptionCounts />
 			    </div>
-			    <div className="col-lg-4">
-					<OperationModeCounts />
-			    </div>
-			    <div className="col-lg-4">
+			    <div className="col-lg-6">
 					<OperationModeCounts />
 			    </div>
 			</div></div>

@@ -52,12 +52,7 @@ class DescriptionCounts extends React.Component {
 				labels: this.state.descriptionCounts["description"], 
 				datasets: [
 					{
-						fillColor: this.getRandomColor(),
-						strokeColor : "#ff6c23",
-		                pointColor : "#fff",
-		                pointStrokeColor : "#ff6c23",
-		                pointHighlightFill: "#fff",
-		                pointHighlightStroke: "#ff6c23",
+						backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
 						label: "Fault Description Counts", 
 						data: this.state.descriptionCounts["description_cnt"]
 					}
